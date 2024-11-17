@@ -35,9 +35,15 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-    if @post.update(post_params)
-      flash[:notice] = "You have updated book successfully."
-      redirect_to post_path
+    @post.assign_attributes(post_params)
+
+    if @post.valid?
+      if @post.update(post_params)
+        flash[:notice] = "You have updated book successfully."
+        redirect_to post_path
+      else
+        render :edit
+      end
     else
       render :edit
     end
@@ -63,4 +69,5 @@ class PostsController < ApplicationController
       redirect_to posts_path
     end
   end
+
 end

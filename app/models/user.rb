@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :posts, dependent: :destroy
-  has_one_attached :image
+  has_one_attached :profile_image
 
   validates :name, uniqueness: true
   validates :name, length: { minimum: 2, maximum: 20, too_short: "is too short (minimum is 2 characters)", too_long: "is too long (maximum is 20 characters)" }

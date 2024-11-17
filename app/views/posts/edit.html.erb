@@ -1,0 +1,27 @@
+<h1>投稿編集</h1>
+  <% if @post.errors.any? %>
+    <strong>
+      <%= @post.errors.count %>件のエラーが発生しました
+    </strong>
+    <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+    <% end %>
+    </ul>
+  <% end %>
+
+  <%= form_with model: @post do |f| %>
+  <p><label for="post_title">タイトル</label></p>
+  <%= f.text_field :title %>
+
+  <p><label for="post_ body">本文</label></p>
+  <%= f.text_area :body %>
+
+  <p><%= f.submit '更新' %></p>
+
+<% end %>
+
+
+  <%= link_to "投稿詳細へ", post_path %>
+  |
+  <%= link_to "戻る", posts_path %>

@@ -3,7 +3,7 @@
 <table>
   <thead>
     <tr>
-      <!--<th colspn="1"></th>-->
+      <th colspn="1"></th>
       <th>タイトル</th>
       <th>本文</th>
     </tr>
@@ -12,6 +12,11 @@
   <tbody>
     <% @posts.each do |post| %>
       <tr>
+        <td>
+          <%= link_to user_path(post.user.id) do %>
+            <%= image_tag post.user.get_profile_image(100,100) %>
+          <% end %>
+        </td>
         <td> <%= link_to post.title, post_path(post.id) %></td>
         <td><%= post.body %></td>
       </tr>
