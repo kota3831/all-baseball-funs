@@ -2,6 +2,7 @@
 
 <div>
   <p><%= image_tag @post.user.get_profile_image(100,100) %></p>
+  <p>投稿者 : <%= @user.name %></p>
   <p>タイトル : <%= @post.title %></p>
   <p>本文 : <%= @post.body %></p>
   <p>投稿日：<%= @post.created_at.strftime('%Y/%m/%d') %></p>

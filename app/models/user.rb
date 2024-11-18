@@ -10,6 +10,10 @@ class User < ApplicationRecord
   validates :name, uniqueness: true
   validates :name, length: { minimum: 2, maximum: 20, too_short: "is too short (minimum is 2 characters)", too_long: "is too long (maximum is 20 characters)" }
 
+  def username
+    self.name
+  end
+
   def get_profile_image(width, height)
     unless  profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
