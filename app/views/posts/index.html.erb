@@ -20,7 +20,7 @@
           </td>
           <td> <%= link_to post.title, post_path(post.id) %></td>
           <td><%= post.body %></td>
-          <td><%= link_to "ユーザー詳細へ", user_path(@user.id) %></td>
+          <td><%= link_to "ユーザー詳細へ", user_path(post.user.id) %></td>
         </tr>
       <% end %>
     </tbody>
@@ -30,7 +30,7 @@
           <td><%= image_tag user.get_profile_image(100,100) %></td>
           <td><%= user.name %></td>
           <td><%= @post.body %></td>
-          
+
         </tr>
       <% end %>
     </tboby>

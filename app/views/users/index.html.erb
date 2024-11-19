@@ -3,6 +3,7 @@
     <h3><%= @user.name %></h3>
     <%= image_tag @user.get_profile_image(100,100) %>
   </div>
+  <%= link_to "ユーザー情報変更はこちらへ", edit_user_path(@user.id)  %>
 
   <table>
     <thead>
