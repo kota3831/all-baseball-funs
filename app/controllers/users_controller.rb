@@ -31,7 +31,7 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    flash[:notice] = "Your accounte has been successfully cancelled."
+    flash[:notice] = "Your accounte has been successfully cancell"
     redirect_to root_path
   end
 
