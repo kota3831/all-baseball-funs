@@ -32,7 +32,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @user.destroy
     flash[:notice] = "Your accounte has been successfully cancell"
-    redirect_to root_path
+    redirect_to new_user_registration_path
   end
 
   private
@@ -46,5 +46,10 @@ class UsersController < ApplicationController
     unless user.id == current_user.id
       redirect_to user_path(current_user.id)
     end
+  end
+
+  def delete_account
+    current_user.destroy
+    redirect_to new_user_registration_path
   end
 end

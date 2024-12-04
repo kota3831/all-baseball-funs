@@ -1,16 +1,29 @@
-<h1>投稿詳細</h1>
+<p id="notice"></p>
+  <div class="container px-5 px-sm-0">
+    <div class="row">
+      <div class="col-md-4">
+        <%= render 'users/list', post: @post, user: @user %>
+      </div>
 
-<div>
-  <p><%= image_tag @post.user.get_profile_image(100,100) %></p>
-  <p>投稿者 : <%= @user.name %></p>
-  <p>タイトル : <%= @post.title %></p>
-  <p>本文 : <%= @post.body %></p>
-  <p>投稿日：<%= @post.created_at.strftime('%Y/%m/%d') %></p>
-  <% if @post.user == current_user %>
-    <%= link_to "編集", edit_post_path(@post.id) %>
-    |
-    <%= link_to "削除", post_path(@post), method: :delete, "data-confirm" => "本当に消しますか？" %>
-  <% end %>
-    |
-  <%= link_to "投稿一覧へ", posts_path(@post) %>
-</div>
+      <div class="col-md-7 offset-md-1">
+        <h1>投稿詳細</h1>
+          <table class="table table-hover table-inverse">
+            <tr rowspan="4">
+              <td><%= image_tag @post.user.get_profile_image(100,100) %></td>
+              <td>投稿者 : <%= @user.name %> <br>
+                  タイトル : <%= @post.title %> <br>
+                  本文 : <%= @post.body %> <br>
+                  投稿日：<%= @post.created_at.strftime('%Y/%m/%d') %>
+              </td>
+              <td>
+            </tr>
+          </table>
+
+          <% if @post.user == current_user %>
+            <%= link_to "編集", edit_post_path(@post.id), class: "btn btn-primary" %>
+            <%= link_to "削除", post_path(@post),class: "btn btn-danger", method: :delete, "data-confirm" => "本当に消しますか？" %>
+          <% end %>
+          <%= link_to "投稿一覧へ", posts_path(@post), class: "btn btn-success" %>
+      </div>
+    </div>
+  </div>

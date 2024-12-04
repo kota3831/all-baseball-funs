@@ -1,27 +1,35 @@
-<h2>プロフィール編集</h2>
-  <% if @user.errors.any? %>
-  <strong>
-    <%= @user.errors.count %>件のエラーが発生しました
-  </strong>
-  <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-  <% end %>
+<p id="notice"></p>
+  <div class="container">
+    <div class="row">
+      <div class="mx-auto col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0" >
+        <h2>ユーザー情報編集</h2>
+          <% if @user.errors.any? %>
+          <strong>
+            <%= @user.errors.count %>件のエラーが発生しました
+          </strong>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+          <% end %>
 
-<%= form_with model: @user do |f| %>
-  <p><label for="inputName">ユーザー名</label></p>
-    <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前"%>
+        <%= form_with model: @user do |f| %>
+          <p><label for="inputName">ユーザー名</label></p>
+            <%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前"%>
 
-  <p><label for="inputEmail">メールアドレス</label></p>
-    <%= f.text_area :email, autofocus: true, id:"inputEmail", placeholder:"メールアドレス"%>
+          <p><label for="inputEmail">メールアドレス</label></p>
+            <%= f.text_area :email, autofocus: true, id:"inputEmail", placeholder:"メールアドレス"%>
 
-  <p><label for="inputImage">ProfileImage</label></p>
-    <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>
+          <p><label for="inputImage">ProfileImage</label></p>
+            <%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %>
 
-  <p><%= f.submit "変更を保存" %></p>
+          <div class="form-group">
+            <input type="submit" name="commit" value="変更を保存" class="btn btn-success" data-disable-with="変更を保存">
+          </div>
+        <% end %>
+        <%= link_to "退会はこちらへ", user_path(@user), class: "btn btn-danger", method: :delete, data: { confirm: "本当に退会しますか？" } %>
+      </div>
+    </div>
+  </div>
 
-<% end %>
-
-<%= link_to "退会はこちらへ", user_path(@user), method: :delete, "data-confirm" => "本当に退会しますか？" %>
