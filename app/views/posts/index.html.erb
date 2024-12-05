@@ -27,7 +27,7 @@
                     </td>
                     <td> <%= link_to post.title, post_path(post.id) %></td>
                     <td><%= post.body %></td>
-                    <td><%= link_to "ユーザー詳細へ", user_path(post.user.id) %></td>
+                    <td><%= link_to "ユーザー詳細へ", user_path(post.user.id), class: "btn btn-dark" %></td>
                   </tr>
                 <% end %>
               </tbody>

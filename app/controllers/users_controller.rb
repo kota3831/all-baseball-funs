@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :authenticate_user!, only: [:edit]
   before_action :is_matching_login_user, only: [:edit, :update]
 
   def index
@@ -20,11 +21,15 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      flash[:notice] = "You have updated user successfully."
-      redirect_to user_path(@user.id)
+    if @user.id != current_user.id
+      redirect_to my_page_path, alert: "他のユーザーの情報は編集できません"
     else
-      render :edit
+      if @user.update(user_params)
+        flash[:notice] = "You have updated user successfully."
+        redirect_to user_path(@user.id)
+      else
+        render :edit
+      end
     end
   end
 
@@ -44,7 +49,7 @@ class UsersController < ApplicationController
   def is_matching_login_user
     user = User.find(params[:id])
     unless user.id == current_user.id
-      redirect_to user_path(current_user.id)
+      redirect_to mypage_path
     end
   end
 

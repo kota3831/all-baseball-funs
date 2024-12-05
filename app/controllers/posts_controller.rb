@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  before_action :redirect_if_not_logged_in, only: [:show, :new, :edit]
   before_action :is_matching_login_user, only: [:edit, :update]
 
   def new
@@ -31,20 +32,12 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
   end
 
   def update
-    @post = Post.find(params[:id])
-    @post.assign_attributes(post_params)
-
-    if @post.valid?
-      if @post.update(post_params)
-        flash[:notice] = "You have updated book successfully."
-        redirect_to post_path
-      else
-        render :edit
-      end
+    if @post.update(post_params)
+      flash[:notice] = "You have updated book successfully."
+      redirect_to post_path
     else
       render :edit
     end
@@ -62,13 +55,15 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :body)
   end
 
-
-
   def is_matching_login_user
-    post = Post.find(params[:id])
-    unless post.user.id == current_user.id
+    @post = current_user.posts.find_by(id: params[:id])
+    unless @post
       redirect_to posts_path
     end
+  end
+
+  def redirect_if_not_logged_in
+    redirect_to  new_user_session_path unless current_user
   end
 
 end

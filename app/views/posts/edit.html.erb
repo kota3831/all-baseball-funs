@@ -1,27 +1,38 @@
-<h1>投稿編集</h1>
-  <% if @post.errors.any? %>
-    <strong>
-      <%= @post.errors.count %>件のエラーが発生しました
-    </strong>
-    <ul>
-      <% @post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-    <% end %>
-    </ul>
-  <% end %>
+<p id="notice"></p>
+  <div class="container">
+    <div class="row">
+      <div class="mx-auto col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0" >
+        <h1>投稿編集</h1>
+          <% if @post.errors.any? %>
+            <strong>
+              <%= @post.errors.count %>件のエラーが発生しました
+            </strong>
+            <ul>
+              <% @post.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+            </ul>
+          <% end %>
 
-  <%= form_with model: @post do |f| %>
-  <p><label for="post_title">タイトル</label></p>
-  <%= f.text_field :title %>
+          <%= form_with model: @post do |f| %>
+            <div class="form-group">
+              <label for="post_title">タイトル</label>
+              <input class="form-control post_title" type="text" name="post[title]" id="post_title", value="<%= @post.title %>">
+            </div>
 
-  <p><label for="post_ body">本文</label></p>
-  <%= f.text_area :body %>
+            <div class="form-group">
+              <label for="post_body">本文</label>
+              <textarea class="form-control post_body" name="post[body]" id="post_body"><%= @post.body %></textarea>
+            </div>
 
-  <p><%= f.submit '更新' %></p>
-<% end %>
+            <div class="form-group">
+              <input type="submit" name="commit" value="更新" class="btn btn-primary" data-disable-with="更新">
+            </div>
+          <% end %>
 
 
-  <%= link_to "戻る", post_path %>
-  |
-  <%= link_to "投稿一覧へ", posts_path %>
-
+          <%= link_to "戻る", post_path, class: "btn btn-success" %>
+          <%= link_to "投稿一覧へ", posts_path, class: "btn btn-info" %>
+      </div>
+    </div>
+  </div>
