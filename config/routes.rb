@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   get 'homes/top'
   get '/about', to: 'homes#about'
   devise_for :users
-  resources :posts
+  resources :posts do
+    resources :post_comments, only: [:create, :destroy]
+  end
+
   get 'mypage', to: 'users#index'
   resources :users, only: [:edit, :show, :update, :destroy]
   delete 'delete_account', to: 'users#delete_account'
