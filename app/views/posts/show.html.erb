@@ -3,43 +3,86 @@
     <div class="row">
       <div class="col-md-4">
         <%= render 'users/list', post: @post, user: @user %>
+        <div class="mt-4">
+          <h3>投稿に対してコメントする</h3>
+          <% if @post_comment.error.any? %>
+          <%= form_with model: [@post, @post_comment] do |f| %>
+            <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
+
+            <%= f.submit "送信する", class: "btn btn-primary btn-block mt-2" %>
+          <% end %>
+        </div>
       </div>
 
       <div class="col-md-7 offset-md-1">
-        <h1>投稿詳細</h1>
-          <table class="table table-hover table-inverse">
-            <tr rowspan="4">
-              <td><%= image_tag @post.user.get_profile_image(100,100) %></td>
-              <td>投稿者 : <%= @user.name %> <br>
-                  タイトル : <%= @post.title %> <br>
-                  本文 : <%= @post.body %> <br>
-                  投稿日：<%= @post.created_at.strftime('%Y/%m/%d') %>
-                <div>
-                  <p>コメント件数：<%= @post.post_comments.count %></p>
-                  <% @post.post_comments.each do |post_comment| %>
-                    <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
-                    <%= post_comment.user.name %>
-                    <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+        <div>
+          <h1>投稿詳細</h1>
+
+          <table class="table">
+            <tbody>
+              <tr>
+                <th width="30%">投稿者</th>
+                <td><%= image_tag @post.user.get_profile_image_thumbnail(50,50), class: 'rounded-circle mr-3' %><%= @user.name %></td>
+              </tr>
+              <tr>
+                <th>タイトル</th>
+                <td><%= @post.title %></td>
+              </tr>
+              <tr>
+                <th>本文</th>
+                <td><%= simple_format(@post.body) %></td>
+              </tr>
+              <tr>
+                <th>投稿日</th>
+                <td><%= @post.created_at.strftime('%Y/%m/%d') %></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-end">
+            <div>
+              <% if @post.user == current_user %>
+                <%= link_to "編集", edit_post_path(@post.id), class: "btn btn-primary" %>
+                <%= link_to "削除", post_path(@post),class: "btn btn-danger", method: :delete, "data-confirm" => "本当に消しますか？" %>
+              <% end %>
+              <%= link_to "投稿一覧へ", posts_path(@post), class: "btn btn-success" %>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <h2>この投稿に対するコメント</h2>
+          <p class="d-flex justify-content-end">コメント件数：<%= @post.post_comments.count %></p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="45%">コメント</th>
+                <th width="25%">投稿者</th>
+                <th width="15%">投稿日</th>
+                <th width="15%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @post.post_comments.each do |post_comment| %>
+                <tr>
+                  <td><%= post_comment.comment %></td>
+                  <td><%= image_tag post_comment.user.get_profile_image_thumbnail(50,50), class: 'rounded-circle mr-3' %><%= post_comment.user.name %></td>
+                  <td><%= post_comment.created_at.strftime('%Y/%m/%d') %></td>
+                  <td>
                     <% if post_comment.user == current_user %>
                       <%= link_to "削除", post_post_comment_path(@post,post_comment), class: "btn btn-danger", method: :delete %>
                     <% end %>
-                  <% end %>
-                </div>
-                <div>
-                  <%= form_with model: [@post, @post_comment] do |f| %>
-                    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-                    <%= f.submit "送信する" %>
-                  <% end %>
-                </div>
-              </td>
-            </tr>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
           </table>
+        </div>
 
-          <% if @post.user == current_user %>
-            <%= link_to "編集", edit_post_path(@post.id), class: "btn btn-primary" %>
-            <%= link_to "削除", post_path(@post),class: "btn btn-danger", method: :delete, "data-confirm" => "本当に消しますか？" %>
-          <% end %>
-          <%= link_to "投稿一覧へ", posts_path(@post), class: "btn btn-success" %>
+
+
+
+
       </div>
 
     </div>

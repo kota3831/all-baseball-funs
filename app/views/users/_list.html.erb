@@ -1,13 +1,13 @@
 <h1>ユーザー情報</h1>
   <h3><%= @user.name %></h3>
     <div>
-      <%= image_tag @user.get_profile_image(100,100) %>
+      <%= image_tag @user.get_profile_image_thumbnail(100,100), class: 'rounded-circle mr-3' %>
     </div>
     <div class="row">
       <a class="btn btn-outline-secondary btn-block edit_user.id" href="/users/<%= user.id %>/edit">
-        ユーザー情報変更はこちらへ
+        ユーザー情報変更
       </a>
     </div>
     <div class="row">
-      <%= link_to "新規投稿はこちらへ", new_post_path, class: "btn btn-outline-warning btn-block edit_user.id" %>
+      <%= link_to "新規投稿", new_post_path, class: "btn btn-outline-warning btn-block mt-2 edit_user.id" %>
     </div>

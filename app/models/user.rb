@@ -22,4 +22,12 @@ class User < ApplicationRecord
     end
     profile_image.variant(resize_to_limit: [width, height]).processed
   end
+  
+  def get_profile_image_thumbnail(width, height)
+    unless  profile_image.attached?
+      file_path = Rails.root.join('app/assets/images/no_image.jpg')
+      profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
+    end
+    profile_image.variant(gravity: :center, resize: "#{width}x#{height}^", crop: "#{width}x#{height}+0+0").processed
+  end
 end
