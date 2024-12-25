@@ -78,7 +78,9 @@
     </header>
     <main>
       <% flash.each do |message_type, message| %>
-        <%= content_tag :div, message, class: message_type %>
+        <% if(message_type != "error") %>
+          <%= content_tag :div, message, class: message_type %>
+        <% end %>
       <% end %>
       <%= yield %>
     </main>

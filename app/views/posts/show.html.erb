@@ -5,19 +5,25 @@
         <%= render 'users/list', post: @post, user: @user %>
         <div class="mt-4">
           <h3>投稿に対してコメントする</h3>
-          <% if @post_comment.error.any? %>
-          <%= form_with model: [@post, @post_comment] do |f| %>
-            <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
-
-            <%= f.submit "送信する", class: "btn btn-primary btn-block mt-2" %>
+          <% if flash[:error].present? %>
+            <%= flash[:error].count %>件のエラーが発生しました
+              <ul>
+                <% flash[:error].each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
           <% end %>
+            <%= form_with model: [@post, @post_comment] do |f| %>
+              <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", class: "form-control" %>
+              <%= f.submit "送信する", class: "btn btn-primary btn-block mt-2" %>
+            <% end %>
+
         </div>
       </div>
 
       <div class="col-md-7 offset-md-1">
         <div>
           <h1>投稿詳細</h1>
-
           <table class="table">
             <tbody>
               <tr>
@@ -78,12 +84,6 @@
             </tbody>
           </table>
         </div>
-
-
-
-
-
       </div>
-
     </div>
   </div>
