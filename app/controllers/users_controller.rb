@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-    @posts = Post.all
+    @posts = Post.page(params[:page]).per(5)
     @post = Post.new
     @user = current_user
   end
