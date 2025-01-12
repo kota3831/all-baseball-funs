@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.page(params[:page]).per(5)
+    @posts = Post.page(params[:page]).per(5).order(created_at: :desc)
     @post = Post.new
     @users = User.all
     @user = current_user
