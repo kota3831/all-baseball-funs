@@ -57,4 +57,9 @@ class UsersController < ApplicationController
     current_user.destroy
     redirect_to new_user_registration_path
   end
+
+  def search
+    #Viewのformで取得したパラメータをモデルに渡す
+    @users = User.search(params[:search])
+  end
 end

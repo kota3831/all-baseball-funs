@@ -67,4 +67,8 @@ class PostsController < ApplicationController
     redirect_to  new_user_session_path unless current_user
   end
 
+  def search
+    @posts = Post.search(params[:search])
+  end
+
 end
