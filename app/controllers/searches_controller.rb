@@ -7,8 +7,12 @@ class SearchesController < ApplicationController
 
     if @range == "User"
       @users = User.looks(params[:search], params[:word])
+      # @post = Post.find(params[:id])
+      # @user = @post.user
     else
       @posts = Post.looks(params[:search], params[:word])
+      # @post = Post.find(params[:id])
+      # @user = @post.user
     end
   end
 end
